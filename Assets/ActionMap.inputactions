@@ -1,0 +1,57 @@
+{
+    "version": 1,
+    "name": "ActionMap",
+    "maps": [
+        {
+            "name": "Gameplay",
+            "id": "35090af0-dfd6-45b8-aa9b-e557d0f3f2c0",
+            "actions": [
+                {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "1560a256-fc40-465a-adfb-b972a61f84c9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "d02585ef-61ef-4e79-8cb7-049a72ac41cc",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true,
+                    "priority": 0
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "73ccaafe-02b7-460d-b24a-7f60f2bf568a",
+                    "path": "<Wiimote>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4f1e38e4-45da-4d36-8916-960a0c0bb4ae",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
