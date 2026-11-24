@@ -2,11 +2,7 @@ using UnityEngine;
 
 public class Interactor : MonoBehaviour
 {
-    GameManager gameManager;
-    private void Start ()
-    {
-        FindFirstObjectByType<GameManager>();
-    }
+    [SerializeField] private GameManager gameManager;
     private void OnTriggerEnter ( Collider other )
     {
         if ( other.gameObject.CompareTag( "Stove" ) )
@@ -14,5 +10,9 @@ public class Interactor : MonoBehaviour
             Debug.Log( "stove touched" );
             gameManager.stoveInteractUI.SetActive( true );
         }
+    }
+    private void OnTriggerExit ( Collider other )
+    {
+        gameManager.stoveInteractUI.SetActive( false );
     }
 }

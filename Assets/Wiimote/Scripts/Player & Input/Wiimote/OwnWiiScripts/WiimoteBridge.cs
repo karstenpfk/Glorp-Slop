@@ -54,11 +54,6 @@ public class WiimoteBridge : MonoBehaviour
 
         float[ ] stick = remote.Nunchuck.GetStick01();
 
-        Debug.Log(
-            "Nunchuk raw stick: X = " +
-            stick[ 0 ] + " Y = " + stick[ 1 ]
-        );
-
         float x = ( stick[ 0 ] - 0.5f ) * 2f;
         float y = ( stick[ 1 ] - 0.5f ) * 2f;
         // Deadzone

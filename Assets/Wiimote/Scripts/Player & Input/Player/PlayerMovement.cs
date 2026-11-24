@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
     public void Move ( InputAction.CallbackContext context )
     {
         movement = context.ReadValue<Vector2>();
-        Debug.Log( "Joystick movement: " + movement );
+        //Debug.Log( "Joystick movement: " + movement );
     }
 
     public void AddIngredient ( GameObject ingredient )
