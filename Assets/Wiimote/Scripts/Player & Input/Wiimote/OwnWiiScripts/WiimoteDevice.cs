@@ -1,12 +1,13 @@
 
+using System.Runtime.InteropServices;
+using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.InputSystem.Layouts;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.InputSystem.Utilities;
-using System.Runtime.InteropServices;
 
-[StructLayout( LayoutKind.Explicit, Size = 16 )]
+[StructLayout( LayoutKind.Explicit, Size = 24 )]
 public struct WiimoteState : IInputStateTypeInfo
 {
     public FourCC format => new FourCC( 'W', 'I', 'I', 'M' );
@@ -22,14 +23,14 @@ public struct WiimoteState : IInputStateTypeInfo
     [InputControl( name = "up", layout = "Button", bit = 7 )]
     public uint buttons;
 
-    [FieldOffset( 4 )]
-    public float accelX;
+    [FieldOffset( 4 )] public float accelX;
+    [FieldOffset( 8 )] public float accelY;
+    [FieldOffset( 12 )] public float accelZ;
 
-    [FieldOffset( 8 )]
-    public float accelY;
-
-    [FieldOffset( 12 )]
-    public float accelZ;
+    // Nunchuk joystick data
+    [FieldOffset( 16 )]
+    [InputControl( name = "nunchuckStick", layout = "Stick" )]
+    public Vector2 nunchuckStick;
 }
 
 [InputControlLayout( stateType = typeof( WiimoteState ) )]
@@ -44,9 +45,7 @@ public class WiimoteDevice : InputDevice
     public ButtonControl home { get; private set; }
     public ButtonControl up { get; private set; }
 
-    public AxisControl accelX { get; private set; }
-    public AxisControl accelY { get; private set; }
-    public AxisControl accelZ { get; private set; }
+    public StickControl nunchuckStick { get; private set; }
 
     protected override void FinishSetup ()
     {
@@ -61,8 +60,6 @@ public class WiimoteDevice : InputDevice
         home = GetChildControl<ButtonControl>( "home" );
         up = GetChildControl<ButtonControl>( "up" );
 
-        //accelX = GetChildControl<AxisControl>( "accelX" );
-        //accelY = GetChildControl<AxisControl>( "accelY" );
-        //accelZ = GetChildControl<AxisControl>( "accelZ" );
+        nunchuckStick = GetChildControl<StickControl>( "nunchuckStick" );
     }
 }

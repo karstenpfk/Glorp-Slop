@@ -15,7 +15,7 @@ public class WiimoteBridge : MonoBehaviour
 
         if ( WiimoteManager.Wiimotes.Count == 0 )
         {
-            Debug.LogError( "No Wiimote found!" );
+            Debug.Log( "No Wiimote found!" );
             return;
         }
 
@@ -26,7 +26,7 @@ public class WiimoteBridge : MonoBehaviour
 
         // Request button data
         remote.SendDataReportMode(
-            InputDataType.REPORT_BUTTONS
+        InputDataType.REPORT_BUTTONS_ACCEL_EXT16
         );
 
         Debug.Log( "Wiimote Input System bridge ready!" );
@@ -35,9 +35,9 @@ public class WiimoteBridge : MonoBehaviour
     void Update ()
     {
         if ( remote == null || device == null )
+        if ( remote == null || device == null )
             return;
 
-        // Read data from Flafla2
         int result;
 
         do
@@ -46,16 +46,32 @@ public class WiimoteBridge : MonoBehaviour
         }
         while ( result > 0 );
 
-        // Create a fresh state every frame
-        WiimoteState state = new WiimoteState();
-
-        // Transfer the A button
-        if ( remote.Button.a )
+        if ( remote.Nunchuck == null )
         {
-            state.buttons |= 1u;
+            Debug.Log( "Nunchuk not detected yet" );
+            return;
         }
 
-        // Send the state to Unity's Input System
+        float[ ] stick = remote.Nunchuck.GetStick01();
+
+        Debug.Log(
+            "Nunchuk raw stick: X = " +
+            stick[ 0 ] + " Y = " + stick[ 1 ]
+        );
+
+        float x = ( stick[ 0 ] - 0.5f ) * 2f;
+        float y = ( stick[ 1 ] - 0.5f ) * 2f;
+        // Deadzone
+        if ( Mathf.Abs( x ) < 0.15f ) x = 0f;
+        if ( Mathf.Abs( y ) < 0.15f ) y = 0f;
+
+        WiimoteState state = new WiimoteState();
+
+        if ( remote.Button.a )
+            state.buttons |= 1u;
+
+        state.nunchuckStick = new Vector2( x, y );
+
         InputSystem.QueueStateEvent( device, state );
     }
 }
