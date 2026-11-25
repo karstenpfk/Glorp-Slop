@@ -15,14 +15,15 @@ public class WiimoteBridge : MonoBehaviour
 
         if ( WiimoteManager.Wiimotes.Count == 0 )
         {
-            Debug.Log( "No Wiimote found!" );
+            Debug.LogError( "No Wiimote found!" );
             return;
         }
 
         remote = WiimoteManager.Wiimotes[ 0 ];
 
-        // Add our custom controller to Unity's Input System
         device = InputSystem.AddDevice<WiimoteDevice>();
+
+        remote.SendDataReportMode( InputDataType.REPORT_BUTTONS_ACCEL_EXT16 );
 
         // Request button data
         remote.SendDataReportMode(
@@ -48,8 +49,12 @@ public class WiimoteBridge : MonoBehaviour
 
         if ( remote.Nunchuck == null )
         {
-            Debug.Log( "Nunchuk not detected yet" );
+            Debug.Log( "Waiting for Nunchuk..." );
             return;
+        }
+        else
+        {
+            Debug.Log( "Nunchuk detected!" );
         }
 
         float[ ] stick = remote.Nunchuck.GetStick01();
